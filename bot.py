@@ -7,8 +7,8 @@ from telegram.ext import (ApplicationBuilder, CommandHandler, ContextTypes, Call
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-START_DATE = datetime(2025, 4, 21)
-END_DATE = datetime(2025, 6, 13)
+START_DATE = datetime.datetime(2025, 4, 21)
+END_DATE = datetime.datetime(2025, 6, 13)
 
 MOTIVATIONAL_QUOTES = [
     "Ты молодец! Так держать!",
@@ -24,11 +24,11 @@ MOTIVATIONAL_QUOTES = [
 ]
 
 BADGES = {
-    3: "🥇 Маленький герой (3 дня без сахара)",
-    7: "🥈 Первая неделя — железная воля!",
-    14: "🥉 Две недели — как скала!",
-    30: "🏆 Легенда! 30 дней!",
-    50: "🏅 Нечеловеческая сила!",
+    3: "\U0001F947 Маленький герой (3 дня без сахара)",
+    7: "\U0001F948 Первая неделя — железная воля!",
+    14: "\U0001F949 Две недели — как скала!",
+    30: "\U0001F3C6 Легенда! 30 дней!",
+    50: "\U0001F3C5 Нечеловеческая сила!",
 }
 
 checkins = {}
@@ -42,7 +42,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def time(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    now = datetime.now()
+    now = datetime.datetime.now()
     delta = now - START_DATE
     remaining = END_DATE - now
 
@@ -60,7 +60,7 @@ async def time(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_name = update.effective_user.first_name
-    today = datetime.now().date()
+    today = datetime.datetime.now().date()
 
     if user_id not in checkins:
         checkins[user_id] = []
@@ -89,7 +89,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def daily_reminder(context: ContextTypes.DEFAULT_TYPE):
     job = context.job
-    now = datetime.now()
+    now = datetime.datetime.now()
     for chat_id in job.data:
         if now.date() == END_DATE.date():
             await context.bot.send_message(chat_id=chat_id, text="\U0001F389 Финал! Поздравляем! Вы победили сахар! Вы прошли весь путь до 13 июня! \U0001F389")
