@@ -1,7 +1,7 @@
 
 import logging
 import random
-from datetime import datetime, timedelta, time
+import datetime
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler, JobQueue)
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     app.add_handler(CallbackQueryHandler(button))
 
     job_queue = app.job_queue
-    job_queue.run_daily(daily_reminder, time=time(hour=9, minute=0), data=lambda context: context.bot_data.get('chats', set()))
+    job_queue.run_daily(daily_reminder, time=datetime.time(hour=9, minute=0), data=lambda context: context.bot_data.get('chats', set()))
 
     print("Бот запущен...")
     app.run_polling()
